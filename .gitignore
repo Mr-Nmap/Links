@@ -1,0 +1,25 @@
+# Dependencies
+
+
+# Environment variables (WICHTIG - API Keys schützen!)
+
+
+# Logs
+*.log
+
+# OS Files
+
+# IDE
+.vscode/
+.idea/
+
+# Backup Folder
+Backup/
+
+# Temporary files
+*.tmp
+*.temp
+
+# Pycache
+__pycache__/
+*.pyc

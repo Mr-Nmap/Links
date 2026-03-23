@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CS12 · Security Links</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+        <rect x="2" y="3" width="9" height="9" rx="2" fill="#00e5cc" opacity=".9"/>
+        <rect x="13" y="3" width="9" height="9" rx="2" fill="#0ea5e9" opacity=".7"/>
+        <rect x="2" y="14" width="9" height="9" rx="2" fill="#a78bfa" opacity=".7"/>
+        <rect x="13" y="14" width="9" height="9" rx="2" fill="#00e5cc" opacity=".4"/>
+      </svg>
+      <span class="sidebar-logo">CS12 · Links</span>
+      <button class="collapse-btn" id="collapseBtn" title="Sidebar ein-/ausblenden">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+    </div>
+    <div class="sidebar-stats">
+      <div class="stat"><div class="stat-val" id="totalCount">…</div><div class="stat-lbl">Links</div></div>
+      <div class="stat"><div class="stat-val" id="catCount">…</div><div class="stat-lbl">Kategorien</div></div>
+      <div class="stat"><div class="stat-val" id="socCount">…</div><div class="stat-lbl">SOC</div></div>
+    </div>
+    <div class="sidebar-actions">
+      <button class="sa-btn" id="exportBtn">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>Export
+      </button>
+      <button class="sa-btn" id="importBtn">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>Import
+      </button>
+    </div>
+    <nav class="sidebar-nav" id="sidebarNav">
+      <div class="nav-all" id="navAll">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        <span>Alle Links</span>
+      </div>
+    </nav>
+  </aside>
+  <main class="main">
+    <div class="topbar">
+      <div class="search-wrap">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input class="search-input" id="searchInput" type="text" placeholder="Suchen: Titel, URL, Beschreibung, Tag…  (Strg+K)">
+        <button class="search-clear" id="searchClear" style="display:none">✕</button>
+      </div>
+      <div class="tag-filters" id="tagFilters">
+        <button class="tag-btn active" data-tag="all">Alle</button>
+        <button class="tag-btn" data-tag="SOC">SOC</button>
+        <button class="tag-btn" data-tag="Pentest">Pentest</button>
+        <button class="tag-btn" data-tag="OSINT">OSINT</button>
+        <button class="tag-btn" data-tag="Compliance">Compliance</button>
+        <button class="tag-btn" data-tag="Training">Training</button>
+        <button class="tag-btn" data-tag="Cloud">Cloud</button>
+      </div>
+      <button class="add-btn" id="addBtn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Hinzufügen
+      </button>
+    </div>
+    <div class="breadcrumb" id="breadcrumb">
+      <span id="bcPath">Alle Links</span>
+      <span class="bc-count" id="bcCount"></span>
+    </div>
+    <div class="cards-area" id="cardsArea">
+      <div class="loading-state"><div class="spinner"></div><span>Lade Links…</span></div>
+    </div>
+  </main>
+</div>
+
+<!-- EDIT MODAL -->
+<div class="modal-overlay" id="editModal">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="modalTitle">Link hinzufügen</span>
+      <button class="modal-close" id="modalClose"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="form-group"><label class="form-label">URL *</label><input class="form-input" id="fUrl" type="url" placeholder="https://…"></div>
+    <div class="form-group"><label class="form-label">Titel *</label><input class="form-input" id="fTitle" placeholder="Tool-Name"></div>
+    <div class="form-group"><label class="form-label">Beschreibung</label><textarea class="form-textarea" id="fDesc" placeholder="Kurze Beschreibung…"></textarea></div>
+    <div class="form-row">
+      <div class="form-group" style="flex:1"><label class="form-label">Kategorie</label>
+        <input class="form-input" id="fCat" placeholder="z.B. Malware &amp; File Analysis" list="catList">
+        <datalist id="catList"></datalist>
+      </div>
+      <div class="form-group" style="flex:1"><label class="form-label">Hauptkategorie</label>
+        <!-- populated by JS -->
+        <select class="form-select" id="fMainCat"></select>
+      </div>
+    </div>
+    <div class="form-group"><label class="form-label">Tags</label><div class="tag-checkboxes" id="tagCheckboxes"></div></div>
+    <div class="modal-actions">
+      <button class="btn-cancel" id="modalCancel">Abbrechen</button>
+      <button class="btn-save" id="modalSave">Speichern</button>
+    </div>
+  </div>
+</div>
+
+<!-- DELETE MODAL -->
+<div class="modal-overlay" id="deleteModal">
+  <div class="modal" style="max-width:380px">
+    <div class="modal-header">
+      <span class="modal-title">Löschen?</span>
+      <button class="modal-close" id="deleteClose"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <p style="color:var(--text2);font-size:13px;margin-bottom:6px">Soll dieser Link gelöscht werden?</p>
+    <p style="font-weight:600;color:var(--text)" id="deleteTitle"></p>
+    <div class="modal-actions">
+      <button class="btn-cancel" id="deleteCancel">Abbrechen</button>
+      <button class="btn-delete" id="deleteConfirm">Löschen</button>
+    </div>
+  </div>
+</div>
+
+<!-- EXPORT MENU -->
+<div class="export-menu" id="exportMenu">
+  <div class="export-item" id="expJson">Alle Links (JSON)</div>
+  <div class="export-item" id="expHtml">Browser-Lesezeichen (HTML)</div>
+  <div class="export-item" id="expFiltered">Aktuelle Ansicht (JSON)</div>
+</div>
+
+<input type="file" id="importFile" accept=".json" style="display:none">
+<div class="toast" id="toast"></div>
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
