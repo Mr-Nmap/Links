@@ -19,6 +19,7 @@ Backup/
 # Temporary files
 *.tmp
 *.temp
+.localstorage-temp.json
 
 # Pycache
 __pycache__/
