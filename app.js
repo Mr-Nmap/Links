@@ -13,7 +13,12 @@ function applyDelta(base){
 }
 
 async function init(){
-  state.base=typeof BASE_DATA!=='undefined'?BASE_DATA:[];
+  try{
+    const res=await fetch('bookmarks.json');
+    state.base=await res.json();
+  }catch{
+    state.base=typeof BASE_DATA!=='undefined'?BASE_DATA:[];
+  }
   state.links=applyDelta(state.base);
   buildMainCatSelect();
   buildSidebar();
