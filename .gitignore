@@ -21,6 +21,14 @@ Backup/
 *.temp
 .localstorage-temp.json
 
+# Sync-Skripte (nur für lokale Entwicklung)
+sync-simple.js
+sync-simple.bat
+SYNC-ANLEITUNG.md
+
+# Export-Dateien
+cs12_*.json
+
 # Pycache
 __pycache__/
 *.pyc
