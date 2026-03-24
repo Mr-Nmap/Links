@@ -7893,5 +7893,17 @@ const BASE_DATA = [
       "Cloud"
     ],
     "id": 649
+  },
+  {
+    "url": "https://www.web2generators.com/apache-tools/htpasswd-generator",
+    "title": "Generator für htpasswd Accounts",
+    "description": "Tools to speed up and ease web development",
+    "category": "🌐 Web Application Security",
+    "main_category": "🌐 APPLICATION SECURITY",
+    "tags": [
+      "SOC",
+      "Cloud"
+    ],
+    "id": 650
   }
 ];
